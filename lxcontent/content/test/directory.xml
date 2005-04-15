@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<!--
+This is an example for a directory.xml.
+This 4 tags are all you can use in this file.
+No of the tags is needed for the lX Content
+to work correct.
+If you don't give a tag, the value will be
+generated automatically.
+
+category_name contains the name of the category,
+which is added to menu.
+default: the name of the category-directory
+
+menu contains item-tags.
+A item-tag can eather contains a file-tag, which
+contains the filename of the file the menuitem
+should point to, or contains a raw_data-tag.
+Raw data is added to the menu how it is.
+default: all *.html-files will be added to menu
+
+You can use stylesheet-tag to specify a stylesheet
+which should be use for the category.
+If there is no "%stylesheet%" in the templatefile
+this tag wouldn't be used.
+default: the stylesheet specified in config.php
+
+main_page is the filename of the page, which should
+be loaded, when the category is chosen in mainmenu
+default: the alphabetically first *.html file in
+the directoy
+
+category_name and main_page should be defined ;)
+-->
+<directory>
+	<category_name>Test Category</category_name>
+<!--
+	<menu>
+		<item>
+			<file>faq_hacken.html</file>
+		</item>
+		<item>
+			<raw_data><a href="http://example.com">example.com</a></raw_data>
+		</item>
+	</menu>
+	<stylesheet>irgendwas anderes</stylesheet>
+-->
+	<main_page>testpage.html</main_page>
+</directory>

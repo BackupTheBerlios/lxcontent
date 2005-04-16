@@ -63,6 +63,10 @@
 	if ($xmlParser->match("//meta[@name='KEYWORDS']"))
 		$var['keywords'] = $var['keywords'] . "," . $xmlParser->getData("//meta[@name='KEYWORDS']/attribute::content");
 	
+	// get describtion
+	if ($xmlParser->match("//meta[@name='DESCRIBTION']"))
+		$var['describtion'] = $xmlParser->getData("//meta[@name='DESCRIBTION']/attribute::content");
+	
 	// generating content
 	$var['file_ext'] = extractFileExt($var['filename']);
 	switch ($var['file_ext'])

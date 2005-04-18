@@ -3,9 +3,9 @@
 	 * applies the data of $vars (array) to the given
 	 * templatefile (also given in $vars)
 	 */
-	function template($vars)
+	function template($vars, $templatefile)
 	{
-		$templatefile = "templates/" . $vars['template'] . "/main.html";
+		$templatefile = $templatefile;
 		if (file_exists($templatefile))
 		{
 			$fp = fopen($templatefile, "r");

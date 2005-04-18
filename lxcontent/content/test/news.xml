@@ -1,0 +1,25 @@
+<content>
+	<title>News</title>
+	<script>news</script>
+	<welcome_text>
+		foobar <b>with</b> <code>html</code>-tags.
+	</welcome_text>
+	<article>
+		<author>Bodo Akdeniz</author>
+		<date>17.04.05 21:35</date>
+		<title>it's a test</title>
+		<text>that's a text</text>
+	</article>
+	<article>
+		<author>Bodo Akdeniz</author>
+		<date>17.04.05 21:35</date>
+		<title>it's a test</title>
+		<text>that's a text</text>
+	</article>
+	<article>
+		<author>Bodo Akdeniz</author>
+		<date>17.04.05 21:35</date>
+		<title>it's a test</title>
+		<text>that's a text</text>
+	</article>
+</content>

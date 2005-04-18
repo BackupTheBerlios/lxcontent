@@ -18,4 +18,22 @@
 		else
 			return "No content found!";
 	}
+
+	/**
+	 * detects the script which should be used to
+	 * generate content from an xml file and execute it.
+	 */
+	function generateContentFromXml($xmlParser)
+	{
+		if ($xmlParser->match("/content[1]/script[1]"))
+		{
+			$script = $xmlParser->getData("/content[1]/script[1]");
+			include("scripts/$script.php");
+			return generateOutput($xmlParser);
+		}
+		else
+		{
+			return "Don't know what script to use for generating output!";
+		}
+	}
 ?>

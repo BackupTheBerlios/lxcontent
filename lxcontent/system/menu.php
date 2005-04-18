@@ -3,14 +3,12 @@
 	{
 	
 		$xmlParser = new XPath($filename);
-		if ($xmlParser->match("//title"))
-		{
-			$title = $xmlParser->getData("//title");
-		}
+		if ($xmlParser->match("/html/head/title"))
+			$title = $xmlParser->getData("/html/head/title");
+		elseif ($xmlParser->match("/content/title"))
+			$title = $xmlParser->getData("/content/title");
 		else
-		{
 			$title = getPathElement($filename, -1);
-		}
 		return $title;
 	}
 

@@ -53,8 +53,10 @@
 	$xmlParser = new XPath($var['filepath']);
 	
 	// get page title
-	if ($xmlParser->match("//title"))
-		$var['page_title'] = $xmlParser->getData("//title");
+	if ($xmlParser->match("/html/head/title"))
+		$var['page_title'] = $xmlParser->getData("/html/head/title");
+	elseif ($xmlParser->match("/content/title[1]"))
+		$var['page_title'] = $xmlParser->getData("/content/title[1]");
 	else
 		$var['page_title'] = $var['filename'];
 	$var['title'] = $var['title'] . " - " . $var['page_title'];
@@ -73,6 +75,9 @@
 	{
 		case "html" :
 			$var['content'] = html_output($xmlParser);
+			break;
+		case "xml" :
+			$var['content'] = generateContentFromXml($xmlParser);
 			break;
 	}
 
@@ -115,5 +120,5 @@
 	$var['end_time'] = time();
 	$var['generation_time'] =  $var['end_time'] - $var['start_time'];
 
-	echo template($var);
+	echo template($var, "templates/" . $var['template'] . "/main.html");
 ?>

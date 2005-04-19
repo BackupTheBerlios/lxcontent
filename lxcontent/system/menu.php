@@ -68,10 +68,15 @@
 		{
 			if (($file!=".") and ($file!="..") and (is_dir("content/" . $file)))
 			{
-				$html .= "<span class=\"mainmenu\">\n";
-				$html .= generateMainMenuItem($file);
-				$html .= "</span>";
+				$files[] = $file;
 			}
+		}
+		sort($files);
+		foreach ($files  as $file)
+		{
+			$html .= "<span class=\"mainmenu\">\n";
+			$html .= generateMainMenuItem($file);
+			$html .= "</span>";
 		}
 		return $html;
 	}

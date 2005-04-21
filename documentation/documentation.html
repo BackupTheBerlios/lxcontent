@@ -1,0 +1,312 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Documentation</title>
+</head>
+<body>
+	<h1>lX Content Documentation</h1>
+	<ol>
+		<li><a href="#download">Download</a></li>
+		<li><a href="#configuration">Configuration</a></li>
+		<li><a href="#categories">Categories</a></li>
+		<li>
+			<a href="#directory.xml">directory.xml</a>
+			<ol>
+				<li><a href="#directory.xml_title">The category title</a></li>
+				<li><a href="#directory.xml_menu">A not automatically generated category menu</a></li>
+				<li><a href="#directory.xml_stylesheet">Use a non-standard stylesheet for the category</a></li>
+				<li><a href="#directory.xml_mainpage">Specify a home page for the category</a></li>
+				<li><a href="#directory.xml_example">directory.xml - example</a></li>
+			</ol>
+		</li>
+		<li><a href="#contentfiles">Content files</a></li>
+		<li><a href="#templates">Templates</a></li>
+		<li><a href="#about">About this document</a></li>
+	</ol>
+	<h2 id="download">1. Download</h2>
+	<ol>
+		<li>
+			First of all you need to download the latest release from the
+			<a href="https://developer.berlios.de/project/showfiles.php?group_id=3548">download page</a>.
+		</li>
+		<li>
+			Now you can extract the archive. If your downloaded the *.tar.gz file type
+			<pre>tar xzvf lxcontent-xxx.tar.gz</pre>
+			for the *.tar.bz2 write
+			<pre>tar xjvf lxcontent-xxx.tar.bz2</pre>
+			Of course you have to use the correct file name ;-)
+		</li>
+		<li>
+			Change to the new directory
+			<pre>cd lxcontent</pre>
+		</li>
+		<li>
+			Now you can configurate the script and upload it to your webspace/server.
+		</li>
+	</ol>
+	<h2 id="configuration">2.  Configuration</h2>
+	<p>
+		You can configurate lX Content in the file <code>config.php</code> in the
+		<code>conf</code>-directory. Following options are available and <em>must</em>
+		be declarated.
+	</p>
+	<dl>
+		<dt><code>$config['template']</code></dt>
+			<dd>
+				Specifies a subdirectory of <code>templates</code>. Default
+				is <q><code>default</code></q>. If you want to modify the template
+				or write a own one, have a look at the
+				<a href="#templates">templates section</a>.
+			</dd>
+		<dt><code>$config['title']</code></dt>
+			<dd>
+				Should contain the title of the website (<em>not</em> the headline
+				or something). The real title of the website is made up from the
+				title given from this option and the title of the content site
+				which is currently displayed.<br />
+				e.g.: <code>$config['title']</code> is <q>foobar</q> and the
+				title of the content site is <q>don't know what to write</q>
+				the title really used is <q>foobar - don't know what to write</q>.
+				<br />
+				<strong>Note</strong>: The title is not the headline of the website, this
+				should be given in the templatefile. The title is the string
+				which is usually  displayed as window title of the browser.
+			</dd>
+		<dt><code>$config['keywords']</code></dt>
+			<dd>
+				The keywords are used by search-bots (like
+				<a href="http://www.google.de/">Google</a>). The keywords which are
+				really used are made up from the keywords in the options and from
+				the keywords the content filei is containing.
+			</dd>
+		<dt><code>$config['describtion']</code></dt>
+			<dd>
+				Contains a describtion of the website. This option is only used,
+				if the content file doesn't contain a own describtion. (see
+				<a href="#contentfiles">content files section</a>)
+			</dd>
+		<dt><code>$config['start_page']</code></dt>
+			<dd>
+				This option should contain a valid file, which is used as start page.
+				The filename has to contain the section directory but must not contain
+				<q><code>content/</code></q>. For example your start page should be
+				<code>content/home/start.html</code>. In this case the category directory
+				is <code>home</code>, and you have to give
+				<q><code>home/start.html</code></q> to this option.
+			</dd>
+		<dt><code>$config['stylesheet']</code></dt>
+			<dd>
+				The filename of the stylesheet you want to use. The given filename
+				has to be relative to the installation directory of lX Content.
+				For example lX Content is stored in <code>/lxcontent</code> and your
+				stylesheet is stored in <code>/lxcontent/templates/foobar/style.css</code>
+				you should give <q><code>templates/foobar/style.css</code></q> to
+				this option.
+			</dd>
+		<dt><code>$config['default_script']</code></dt>
+			<dd>
+				This option isn not used so far, but it <em>must</em> be set to anything,
+				otherwise you get errors.
+			</dd>
+	</dl>
+	<p>
+		To set an option, write the option followed by an equal sign and a string between
+		apostrophe. At the end of a line must be a semicolon. For example:
+	</p>
+	<pre>$config['start_page'] = "main/start.html";</pre>
+	<h2 id="categories">3. Categories</h2>
+	<p>
+		You have to set up at least one category to make the script working correctly.
+		This is very easy. You only have to create a subdirectory inside the
+		<code>content</code>-directory. For example <q><code>foobar</code></q>.
+		Now the directory <code>content/foobar</code> can contain data for
+		the categorie named <q>foobar</q>. The directory name should only contain
+		lowercase letters and no spaces or special characters. The name of the directory
+		is used as the category name, but you can change this by creating a
+		<a href="#directory.xml">directory.xml</a>-file inside the category-directory.
+	</p>
+	<h2 id="directory.xml">4. directory.xml</h2>
+	<p>
+		With this file you can modify the name of the category it belongs to, you
+		can create a menu for the category, give an alternative stylesheet to use
+		for this category, and specify a category start page.
+		You don't need to create such a file, but it make really make sense, because
+		if you don't the category name is the same as the name of the category directory,
+		what doesn't looks very nice ;-)
+	</p>
+	<p>
+		<code>directory.xml</code> is XML-file, and need to be valid.
+		The root element is <code>directory</code>. An example for the
+		<code>directory.xml</code> can be found at
+		<a href="directory.xml_example"><q>directory.xml - example</q></a>.
+	</p>
+	<h3 id="directory.xml_title">The category name</h3>
+	<p>
+		You really should take advantage of the possibility to set a name for 
+		a category. If you don't do so, the name of the category-directory would
+		be used.
+		To set a name simply add a <code>category_name</code>-tag inside the
+		root element of the <code>directory.xml</code> file.
+		For example:
+	</p>
+	<pre><code>&lt;category_name&gt;any category name&lt;/category_name&gt;</code></pre>
+	<h3 id="directory.xml_menu">A not automatically generated category menu</h3>
+	<p>
+		Usually the category menu is generated automatically from the files
+		stored in the category directory, but sometimes you need to
+		change something in the menu (if you want to add a searchbox in the menu,
+		or if you don't want all files from the directory to be listed in menu
+		for example), if you want to do this, the <code>menu</code>-tag
+		gives you this possibility. To add items to the menu you have to
+		add <code>item</code>-tags into <code>menu</code>. Than you have
+		two possibilities. A <code>item</code>-tag can either contain a
+		<code>file</code>-tag or a <code>raw_data</code>-tag. If you use the
+		<code>file_tag</code> you can specify a file (of this category and
+		without path!) to link to. The link title is generated from the title
+		of the file. If you use the <code>raw_data</code>-tag you can insert
+		any xhtml-code into it. This code will be added to the menu how it is.
+	</p>
+	<h3 id="directory.xml_stylesheet">Use a non-standard stylesheet for the category</h3>
+	<p>
+		You can use for each category a own style sheet. You can specify it with the
+		<code>stylesheet</code>-tag. The specified filename has to be a filename
+		with path relative to the lX Content directory.
+		If you don't use this option, the stylesheet from <code>config.php</code>
+		or from the template will be used.
+	</p>
+	<h3 id="directory.xml_mainpage">Specify a home page for the category</h3>
+	<p>
+		Specify a home page for the category with the <code>main_page</code>-tag.
+		The filename must be without path and it has to be a file stored in
+		the category-directory. This file will be used as content file, when
+		the category is chosen from the main menu.
+		You should specify a file. If you don't it could be any file which is used as
+		home page for the category.
+	</p>
+	<h3 id="directory.xml_example">directory.xml - example</h3>
+	<p>
+		This is a example for a <code>directory.xml</code> file. You don't need to
+		set any of the <code>/directory/*</code> elements. If you don't set something
+		it would be generated automatically. So you only need to set options wich
+		should not be like the defaults.
+	</p>
+	<pre>&lt;directory&gt;
+	&lt;category_name&gt;Test Category&lt;/category_name&gt;
+
+	&lt;menu&gt;
+		&lt;item&gt;
+			&lt;file&gt;foobar.html&lt;/file&gt;
+		&lt;/item&gt;
+		&lt;item&gt;
+			&lt;raw_data&gt;&lt;a href="http://example.com"&gt;example.com&lt;/a&gt;&lt;/raw_data&gt;
+		&lt;/item&gt;
+	&lt;/menu&gt;
+	&lt;stylesheet&gt;anystylesheet.css&lt;/stylesheet&gt;
+
+	&lt;main_page&gt;start.html&lt;/main_page&gt;
+&lt;/directory&gt;</pre>
+	<h2 id="contentfiles">5. Content files</h2>
+	<p>
+		Until now you have categories, perhaps menus, but no content.
+		To add content is very easy so far, because only html-files are
+		supported to use in content at the moment (this will change ;-)).
+		Simply store <strong>valid xhtml</strong> files with the extension
+		<q>.html</q> in the directory of the category it should belong to.
+		That' it!
+	</p>
+	<p>
+		Followed stuff in the xhtml files will be used by lX Content. Only
+		the title has to be present (also to be valid xhtml).
+	</p>
+	<ul>
+		<li>the content of the <code>title</code>-tag is added to the site title given in <code>config.php</code></li>
+		<li>a site describtion given by <code>meta</code>-tag (<code>&lt;meta name="DESCRIBTION" content="a very nice site" /&gt;</code>; name-value has to be upper-case)</li>
+		<li>the keywords (<code>&lt;meta name="KEYWORDS" content="foo, bar, bla" /&gt;</code>; name-value has to be upper-case) of the content site are added to the keywords specified in <code>config.php</code></li>
+		<li>the content ;-) (everything between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code>)</li>
+	</ul>
+	<h2 id="templates">6. Templates</h2>
+	<p>
+		Now you have all content for your lX Content-website.
+		You only need a nice, individual design.
+		Making a template for lX Content is very easy, because it's only one file
+		(until now ;-)). Simply make a design or take a website and delete it's
+		content. But there is one thing you <strong>must not</strong> forget.
+		The templatefile will be stored in a subdirectory of the
+		<code>template</code>-directory. But when the templatefile is
+		used by lX Content it will be included in the <code>index.php</code>-file
+		in the lX Content root directory.
+		So all links and image paths, etc. have to be relative to the lX Content
+		root directory (where the <code>index.php</code> file is stored).
+	</p>
+	<p>
+		If you have made a design (without content) you can place some placeholder
+		in it, to say lX Content where to include the content.
+		Following placeholder are available:
+	</p>
+	<dl>
+		<dt><code>describtion</code></dt>
+			<dd>
+				The site describtion. Should be placed in the <code>meta</code>-tag for the describtion.
+			</dd>
+		<dt><code>keywords</code></dt>
+			<dd>
+				The site keywords. Should be placed in the <code>meta</code>-tag for the keywords.
+			</dd>
+		<dt><code>title</code></dt>
+			<dd>
+				This gives the title of the site. It should be placed inside the <code>title</code>-tag.
+			</dd>
+		<dt><code>stylesheet</code></dt>
+			<dd>
+				The path of the stylesheet specified by <code>config.php</code> or by the content file.
+				Sometimes (mostly?) it makes more sense for a stylesheet to link it statically in
+				the templatefile.
+			</dd>
+		<dt><code>mainmenu</code></dt>
+			<dd>
+				Contains the items of the main menu which links to the different categories.
+			</dd>
+		<dt><code>catmenu</code></dt>
+			<dd>
+				Contains the items of the category menu.
+			</dd>
+		<dt><code>category</code></dt>
+			<dd>
+				The name of the category.
+			</dd>
+		<dt><code>generation_time</code></dt>
+			<dd>
+				The time lX Content needed to generate the output in seconds. By me at home it's usually 0.
+			</dd>
+		<dt><code>some more</code></dt>
+			<dd>
+				There are some more placeholders you theoretically can use in the templatefile, but
+				the most things doesn't make sense in a templatefile and are only used from lX Content
+				itself. If you want to play around with this stuff look at <code>system/main.php</code>.
+				There is a array named <var>$var</var> which element names can be used with <q>%</q>
+				around it in the templatefile.
+			</dd>
+	</dl>
+	<p>
+		All placeholder has to be stored between percent symbols (<q>%</q>). For example <code>%foobar%</code>.
+		(I can not use a real placeholder as example, because it possibly will be replaced ;-))
+	</p>
+	<p>
+		If you have written your templatefile, create a subdirectory in the <code>templates</code> directory and
+		store your templatefile in it as <code>main.html</code>. Now you can specify it in the
+		<code>config.php</code> file.
+	</p>
+	<h2 id="about">About this document</h2>
+	<p>
+		This document was written by <a href="mailto:cypher@users.berlios.de">Bodo Akdeniz</a>. It may contain
+		many errors, because I'm not really good in speaking/writing english. If you find errors, feel free
+		to send me an email or change them yourself. The text is licensed under the
+		<a href="http://www.gnu.org/copyleft/fdl.html">GNU Free Document License</a> which you can find here
+		<a href="http://www.gnu.org/copyleft/fdl.html">http://www.gnu.org/copyleft/fdl.html</a>.
+	</p>
+</body>
+</html>

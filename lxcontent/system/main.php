@@ -120,5 +120,10 @@
 	$var['end_time'] = time();
 	$var['generation_time'] =  $var['end_time'] - $var['start_time'];
 
+	if ( stristr($_SERVER["HTTP_ACCEPT"],"application/xhtml+xml") ) {
+		header("Content-type: application/xhtml+xml");
+	} else {
+		header("Content-type: text/html");
+	}
 	echo template($var, "templates/" . $var['template'] . "/main.html");
 ?>

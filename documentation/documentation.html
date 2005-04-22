@@ -23,7 +23,13 @@
 				<li><a href="#directory.xml_example">directory.xml - example</a></li>
 			</ol>
 		</li>
-		<li><a href="#contentfiles">Content files</a></li>
+		<li>
+			<a href="#contentfiles">Content files</a>
+			<ol>
+				<li><a href="#contentfiles_html">Using XHTML files</a></li>
+				<li><a href="#contentfiles_xml">Using XML</a></li>
+			</ol>
+		</li>
 		<li><a href="#templates">Templates</a></li>
 		<li><a href="#about">About this document</a></li>
 	</ol>
@@ -212,15 +218,18 @@
 	<h2 id="contentfiles">5. Content files</h2>
 	<p>
 		Until now you have categories, perhaps menus, but no content.
-		To add content is very easy so far, because only html-files are
-		supported to use in content at the moment (this will change ;-)).
-		Simply store <strong>valid xhtml</strong> files with the extension
-		<q>.html</q> in the directory of the category it should belong to.
-		That' it!
+		To add content is very easy. There are two primary possibilities.
+		You can use <strong>valid XHTML</strong> Documents, or XML
+		Documents.
+	</p>
+	<h3 id="contentfiles_html">Using XHTML files</h3>
+	<p>
+		To use an XHTML-file as content, simply store it in the directory of the
+		category it should belong to. Don't forget to give it the extension <q>.html</q>.
 	</p>
 	<p>
-		Followed stuff in the xhtml files will be used by lX Content. Only
-		the title has to be present (also to be valid xhtml).
+		If XHTML files will be used by lX Content. Only
+		the title has to be present (also to be valid XHTML).
 	</p>
 	<ul>
 		<li>the content of the <code>title</code>-tag is added to the site title given in <code>config.php</code></li>
@@ -228,6 +237,55 @@
 		<li>the keywords (<code>&lt;meta name="KEYWORDS" content="foo, bar, bla" /&gt;</code>; name-value has to be upper-case) of the content site are added to the keywords specified in <code>config.php</code></li>
 		<li>the content ;-) (everything between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code>)</li>
 	</ul>
+	<h3 id="contentfiles_xml">Using XML</h3>
+	<p>
+		The other way to insert content is by using XML-files.
+		The root element of the file has to be <code>content</code>.
+		Than it <em>need</em> to has a <code>script</code>-Element
+		as child of <code>content</code>-element. This element
+		has to contain the name of the script which would
+		generate content from the file. "the name of the script" is 
+		the filename <strong>without</strong> it's extension (<q>.php</q>).
+		The <code>content</code>-element also should contain a
+		<code>title</code>-element. This is used the same way as 
+		by using XHTML-files.
+	</p>
+	<p>
+		The scripts to generate the content from an XML-file (or an other source, thats
+		also possible, but they are only called when they are specified in an
+		XML file) can be written very easily, if you have some experience in
+		coding PHP. You have to store a file with the extension <q>.php</q> in the
+		<code>scripts</code>-direcory of lX Content. The filename <em>without</em>
+		the extension is the script-name which is given in the XML file.
+		Inside your script you have to specify a function named <code>generateOutput</code>
+		and which takes one argument.
+	</p>
+	<pre>function generateOutput($xmlParser) {
+	/* you code */
+	return $html; // function has to return valid xhtml-code
+}</pre>
+	<p>
+		The argument <var>$xmlParser</var> will be a <code>XPath</code> object 
+		(see <a href="http://sourceforge.net/projects/phpxpath/">Sourceforge - Php.XPath</a> for
+		more information about this object) with loaded content.
+		The function has to return <strong>valid xhtml</strong>!
+		The string returned by this function is stored at the content-position
+		in the main template.
+	</p>
+	<p>
+		<strong>Tip</strong>: You can use the <code>template</code>-function for
+		generating output with an easy to change layout.
+		The <code>template</code>-function is declarated as follow:
+	</p>
+	<pre>function template($vars, $templatefile)</pre>
+	<p>
+		<var>$templatefile</var> is a filename (relative to lX Content directory)
+		which contains the template.
+		<var>$vars</var> is a array of elements which can be used in the templatefile.
+		If a name of an element between percent symbols (<q>%</q>) exists in the
+		templatefile it will be restored with the value of the element.
+		The function returns a string with the restored content of the templatefile.
+	</p>
 	<h2 id="templates">6. Templates</h2>
 	<p>
 		Now you have all content for your lX Content-website.

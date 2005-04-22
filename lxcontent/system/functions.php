@@ -1,5 +1,15 @@
 <?php
 	/**
+	 * returns the absolute URL of $relative_path
+	 * Don't work with symbolic links!!!
+	 */
+	function htmlpath($relative_path) {
+		$realpath=realpath($relative_path);
+		$htmlpath=str_replace($_SERVER['DOCUMENT_ROOT'],'',$realpath);
+		return $htmlpath;
+	}
+	
+	/**
 	 * strips the $tag-tag from $text
 	 */
 	function stripTag($tag, $text)

@@ -114,9 +114,13 @@
 		$var['catmenu'] = menuFromCatdir($var['catdir']);
 	}
 
-	// hauptmenu generieren
+	// generate mainmenu
 	$var['mainmenu'] = mainMenu();
+
+	// set some more variables to use in template
+	$var['absolute_content_filename'] = htmlpath($var['filepath']);
 	
+	// calculate runtime
 	$var['end_time'] = time();
 	$var['generation_time'] =  $var['end_time'] - $var['start_time'];
 

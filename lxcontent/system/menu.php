@@ -30,7 +30,7 @@
 		$i=0;
 		while ($i < count($files))
 		{
-			if (extractFileExt(($page=$files[$i])) == "html")
+			if ((extractFileExt(($page=$files[$i])) == "html") or (extractFileExt(($page=$files[$i])) == "xhtml"))
 				return $page;
 			$i++;
 		}

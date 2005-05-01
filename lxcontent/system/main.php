@@ -73,7 +73,8 @@
 	$var['file_ext'] = extractFileExt($var['filename']);
 	switch ($var['file_ext'])
 	{
-		case "html" :
+		case "html"  :
+		case "xhtml" :
 			$var['content'] = html_output($xmlParser);
 			break;
 		case "xml" :
@@ -129,5 +130,7 @@
 	} else {
 		header("Content-type: text/html");
 	}
-	echo template($var, "templates/" . $var['template'] . "/main.html");
+
+	$output = template($var, "templates/" . $var['template'] . "/main.html");
+	echo $output;
 ?>
